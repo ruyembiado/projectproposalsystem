@@ -11,6 +11,29 @@ if (isset($_POST['propose'])) :
         $methodology = $_POST['methodology'];
         $title = $_POST['title'];
         $bibliography = $_POST['bibliography'];
+        
+        // Research Control Number
+        // Generate RCN
+        function generateRCN( $prefix ) {
+            $counterFile = 'counter.txt';
+            // File to store the counter value
+            // Read the counter value from the file
+            $counter = file_get_contents( $counterFile );
+            if ( $counter === false ) {
+                $counter = 0;
+            }
+            $counter = str_pad( $counter, 9, '0', STR_PAD_LEFT );
+            // Pad with leading zeros
+            $rcn = $prefix . $counter;
+            // Increment the counter for the next RCN
+            $counter++;
+            // Store the updated counter value back to the file
+            file_put_contents( $counterFile, $counter );
+            return $rcn;
+        }
+        // Usage example
+        $prefix = 'ISAT';
+        $rcn = generateRCN( $prefix );
 
         //Input the fields
         $fields = [
